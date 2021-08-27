@@ -4,7 +4,7 @@ BrainFuck api executes your code and returns both ascii string and ascii code ar
 
 # Execute BrainFuck Code
 
-## **POST** `/api`
+## **POST** `/api/execute`
 
 executes your brainfuck code.
 
@@ -39,7 +39,7 @@ or
 Javascript
 
 ```js
-await axios.post("https://brainfuck-api.vercel.app/api", {
+await axios.post("https://brainfuck-api.vercel.app/api/execute", {
   code: ",.,.,.",
   input: "hey",
 });

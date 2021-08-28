@@ -1,4 +1,4 @@
-import { bf } from "lib/bf";
+import { bf } from "lib/executor";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(

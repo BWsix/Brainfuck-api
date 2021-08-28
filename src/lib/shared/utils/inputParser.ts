@@ -1,4 +1,4 @@
-import { inputArrValidator } from "./";
+import { inputArrValidator } from ".";
 
 export const inputParser = (input: string) => {
   const parsed = input.split("").map((chr) => chr.charCodeAt(0));

@@ -8,13 +8,13 @@ export const findPairs = (code: string) => {
     } else if (chr === "]") {
       const leftIdx = lefts.pop();
 
-      if (!leftIdx)
-        throw "found an extra right square bracket parsing the code.";
+      if (!leftIdx) throw "too many right square brackets";
 
       pairs.set(idx, leftIdx);
       pairs.set(leftIdx, idx);
     }
   });
 
+  if (lefts.length) throw "too many left square brackets";
   return pairs;
 };

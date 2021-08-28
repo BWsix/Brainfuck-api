@@ -1,8 +1,9 @@
-import { codeParser, execute, inputParser, inputArrValidator } from "./utils";
+import { inputParser, inputArrValidator } from "lib/shared/utils";
+import { codeParser, execute } from "./utils";
 
 export const bf = (_code: string, input?: string | number[]): ExecuteRes => {
   const code = codeParser(_code);
-  if (!code.length) return { error: "no valid brainfuck code is provided." };
+  if (!code.length) return { error: "(no output)" };
   try {
     let result;
 
@@ -26,6 +27,6 @@ export const bf = (_code: string, input?: string | number[]): ExecuteRes => {
     return result;
   } catch (err) {
     if (typeof err === "string") return { error: err };
-    return { error: "unknown error." };
+    return { error: "unexpected error" };
   }
 };

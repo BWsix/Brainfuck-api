@@ -5,8 +5,3 @@ type ExecuteRes = {
   };
   error?: string;
 };
-
-type ReqType = {
-  code: string;
-  input?: string | number[];
-};

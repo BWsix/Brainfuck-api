@@ -1,4 +1,4 @@
-import { findPairs } from "./";
+import { findPairs } from ".";
 
 export const execute = (code: string, input?: number[]): ExecuteRes => {
   let codePtr = 0;
@@ -33,42 +33,36 @@ export const execute = (code: string, input?: number[]): ExecuteRes => {
         case ">":
           arrPtr++;
           if (arrPtr > 420)
-            throw "(memory limit exceeded) memory size greater than 420";
+            throw "memory limit exceeded (index greater than 420)";
           if (arrPtr > arr.length - 1) arr.push(0);
 
-          console.log(">, now at ", arrPtr);
           break;
 
         case "<":
           arrPtr--;
-          console.log("<, now at ", arrPtr);
-          if (arrPtr < 0) throw "(memory error) pointer index less than 0";
+          if (arrPtr < 0) throw "memory error (pointer index less than 0)";
           break;
 
         case ".":
           output.push(arr[arrPtr]);
-          console.log("print: ", arr[arrPtr]);
           break;
 
         case ",":
-          if (!input?.length) throw "there's no more input value";
+          if (!input?.length)
+            throw "program stalled (waiting for input, but there's no more)";
           arr[arrPtr] = input.shift()!;
-          console.log("input");
           break;
       }
 
-      console.log(arr);
       codePtr++;
     }
 
-    if (!output.length) throw "no output";
+    if (!output.length) throw "(no output)";
   } catch (err) {
-    const error = typeof err !== "string" ? "unknown error" : err;
+    const error = typeof err !== "string" ? "unexpected error" : err;
 
     return { error };
   }
-
-  console.log(output);
 
   const output_str = output.map((num) => String.fromCharCode(num)).join("");
   return { output: { str: output_str, arr: output } };

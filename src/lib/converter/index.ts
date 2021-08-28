@@ -21,7 +21,7 @@ export const convert = (textArr: number[]) => {
     else if (prevIdx < idx!) output += ">".repeat(idx! - prevIdx);
     prevIdx = idx!;
 
-    if (values[idx!] === 32) output += "\n";
+    if (values[idx!] === 32) output += String.fromCharCode(10);
 
     const offset = values[idx!] - num!;
     if (offset > 0) output += "-".repeat(offset);

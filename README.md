@@ -1,8 +1,13 @@
 # BrainFuck Api
 
-BrainFuck api executes your code and returns both ascii string and ascii code array.
+I love BrainFuck.
 
-## Execute BrainFuck Code
+### Table of Contents
+
+- [Execute BrainFuck Code](#ebfc)
+- [Convert Text to BrainFuck Code](#cttbfc)
+
+## Execute BrainFuck Code<a id="ebfc"></a>
 
 ### **POST** `/api/execute`
 
@@ -45,6 +50,18 @@ await axios.post("https://brainfuck-api.vercel.app/api/execute", {
 });
 ```
 
+Python
+
+```py
+requests.post(
+  "https://brainfuck-api.vercel.app/api/execute",
+  {
+    "code": ",.,.,.",
+    "input": "bob",
+  }
+)
+```
+
 Response
 
 ```
@@ -60,7 +77,7 @@ Status: 200 OK
 }
 ```
 
-## Convert Text to BrainFuck Code
+## Convert Text to BrainFuck Code <a id="cttbfc"></a>
 
 ### **POST** `/api/convert`
 
@@ -96,6 +113,17 @@ Javascript
 await axios.post("https://brainfuck-api.vercel.app/api/convert", {
   text: "bob",
 });
+```
+
+Python
+
+```py
+requests.post(
+  "https://brainfuck-api.vercel.app/api/convert",
+  {
+    "text": "bob",
+  }
+)
 ```
 
 Response

@@ -6,6 +6,7 @@ I love BrainFuck.
 
 - [Execute BrainFuck Code](#ebfc)
 - [Convert Text to BrainFuck Code](#cttbfc)
+- [Helper Functions](#utils)
 
 ## Execute BrainFuck Code<a id="ebfc"></a>
 
@@ -135,5 +136,75 @@ Status: 200 OK
 ```json
 {
   "code": "++++++++++[>+++++++++>+++++++++++<<-]\n>++++++++.>+.<."
+}
+```
+
+## Helper Functions<a id="utils"></a>
+
+### **POST** `/api/utils`
+
+helper functions for conversion between text/ascii.
+
+#### **Params**
+
+|  FIELD   |       TYPE       | DESCRIPTION                        |       REQUIRED        |
+| :------: | :--------------: | :--------------------------------- | :-------------------: |
+|   text   |      string      | ascii text                         | one of the two fields |
+| asciiArr | array of numbers | array of numbers between 0 and 255 | one of the two fields |
+
+#### **Response**
+
+```json
+{
+  "text": "text from given ascii code array"
+}
+```
+
+or
+
+```json
+{
+  "asciiArr": [0, 1, 2, ..., 255]
+}
+```
+
+or
+
+```json
+{
+  "error": "detail"
+}
+```
+
+#### **Example**
+
+Javascript
+
+```js
+await axios.post("https://brainfuck-api.vercel.app/api/utils", {
+  asciiArr: [104, 101, 121, 32, 98, 111, 98],
+});
+```
+
+Python
+
+```py
+requests.post(
+  "https://brainfuck-api.vercel.app/api/utils",
+  {
+    "asciiArr": [104, 101, 121, 32, 98, 111, 98],
+  }
+)
+```
+
+Response
+
+```
+Status: 200 OK
+```
+
+```json
+{
+  "text": "hey bob"
 }
 ```

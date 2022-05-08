@@ -1,33 +1,29 @@
+import Joi from "joi";
 import { bf } from "lib/executor";
+import { validate } from "lib/middlewares/validation";
 import type { NextApiRequest, NextApiResponse } from "next";
+import connect from "next-connect";
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
-  if (req.method === "OPTIONS") return res.status(200).end();
-  if (req.method !== "POST")
-    return res.status(405).json({ error: "only allow post request for now." });
+const schema = Joi.object({
+  code: Joi.string(),
+  input: Joi.any().optional(),
+});
 
-  const { code, input } = req.body;
-  let result: ExecuteRes;
-
-  if (typeof code !== "string")
-    return res
-      .status(400)
-      .json({ error: "there's no brainfuck code in your request." });
-
-  if (
-    typeof input === "undefined" ||
-    typeof input === "string" ||
-    Array.isArray(input)
-  ) {
-    result = bf(code, input);
-  } else {
-    return res.status(400).json({
-      error: "input type must be undefined, string or array of number",
-    });
-  }
-
-  return res.status(200).json(result);
-}
+export default connect<NextApiRequest, NextApiResponse>({
+  onError: (err, _req, res, _next) => {
+    if (typeof err === "string") {
+      return res.status(400).json({ error: err });
+    }
+    res.status(500).end("Something broke!");
+  },
+  onNoMatch: (req, res) => {
+    res.status(405).end("Method not allowed");
+  },
+})
+  .post(validate({ body: schema }), (req, res) => {
+    const { code, input } = req.body;
+    const { error, output } = bf(code, input);
+    if (error) throw error;
+    return res.json(output);
+  })
+  .options((_, res) => res.status(200).send(""));
